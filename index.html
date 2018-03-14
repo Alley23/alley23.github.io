@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/14/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/14/函数this（上下文）总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="小凯">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/14/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2018/03/14/函数this（上下文）总结/" itemprop="url">函数this（上下文）总结</a></h1>
         
 
         <div class="post-meta">
@@ -260,7 +260,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T22:27:46+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T22:06:13+08:00">
                 2018-03-14
               </time>
             
@@ -300,15 +300,1037 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <blockquote>
+<p>函数的this是什么，取决于函数怎么调用！！而不是函数如何定义！！<br>函数的this是函数的调用时表现的性质，不是函数定义的时候写死的性质！！</p>
+</blockquote>
+<h3 id="1-函数使用圆括号调用，函数的this就是window对象"><a href="#1-函数使用圆括号调用，函数的this就是window对象" class="headerlink" title="1. 函数使用圆括号调用，函数的this就是window对象"></a>1. 函数使用圆括号调用，函数的this就是window对象</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function() &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">10</span>;</span><br><span class="line">    console.log(<span class="keyword">this</span>.a)  <span class="comment">//实际上访问的是window.a</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="title">fun</span><span class="params">()</span></span>   <span class="comment">//20</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>函数function fun() {}的this不要看他怎么定义，要看他怎么调用； 此时函数是fun() 函数名加圆括号直接调用，此时this就是window对象。</li>
+</ul>
+<h3 id="2-函数作为一个对象的方法，对象打点调用，函数的this就是这个对象"><a href="#2-函数作为一个对象的方法，对象打点调用，函数的this就是这个对象" class="headerlink" title="2. 函数作为一个对象的方法，对象打点调用，函数的this就是这个对象"></a>2. 函数作为一个对象的方法，对象打点调用，函数的this就是这个对象</h3><blockquote>
+<p>对象.函数()</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    <span class="string">"a"</span> : <span class="number">10</span>,</span><br><span class="line">    <span class="string">"b"</span> : <span class="number">20</span>,</span><br><span class="line">    <span class="string">"c"</span> : fn   <span class="comment">//对象方法值为函数</span></span><br><span class="line">&#125;</span><br><span class="line">obj.c()   <span class="comment">//10</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>我们要看清楚函数执行的时候，是怎么执行的！！</li>
+<li>现在不是圆括号直接执行！！而是一个对象打点调用这个函数执行，所以函数的上下文是obj对象！！！</li>
+</ul>
+<h3 id="3-函数是事件处理函数，函数的this就是触发这个事件的对象"><a href="#3-函数是事件处理函数，函数的this就是触发这个事件的对象" class="headerlink" title="3. 函数是事件处理函数，函数的this就是触发这个事件的对象"></a>3. 函数是事件处理函数，函数的this就是触发这个事件的对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义了一个btnEvent，然后把这个btnEvent当做了2个DOM元素的事件处理函数：</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">btnEvent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.style.background = <span class="string">"#999"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> box1 = <span class="built_in">document</span>.getElementById(<span class="string">"box1"</span>);</span><br><span class="line"><span class="keyword">var</span> box2 = <span class="built_in">document</span>.getElementById(<span class="string">"box2"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//把同一个函数绑定给不同的对象</span></span><br><span class="line">box1.onclick = btnEvent;</span><br><span class="line">box2.onclick = btnEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">//函数不会执行，直到用户点击了某一个div标签。此时点击谁，this就是谁。</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-定时器调用函数，上下文是window对象"><a href="#4-定时器调用函数，上下文是window对象" class="headerlink" title="4. 定时器调用函数，上下文是window对象"></a>4. 定时器调用函数，上下文是window对象</h3><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function <span class="function"><span class="keyword">fun</span>() &#123;</span></span><br><span class="line"><span class="function">    <span class="title">console</span></span>.log(this.a);</span><br><span class="line">&#125;</span><br><span class="line">var a = <span class="number">99</span>;</span><br><span class="line">setInterval(<span class="function"><span class="keyword">fun</span>, 1000)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">/</span></span>/函数<span class="function"><span class="keyword">fun</span>被定时器调用，此时函数的<span class="title">this</span></span>就是window对象。每秒钟打印出<span class="number">99</span>.</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定时器在事件中使用</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//错误的写法</span></span><br><span class="line"><span class="keyword">var</span> box1 = <span class="built_in">document</span>.getElementById(<span class="string">"box1"</span>);</span><br><span class="line">box1.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.style.background = <span class="string">"red"</span>;</span><br><span class="line">	&#125;,<span class="number">2000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定时器里面的函数调用者是定时器，所以this上下文就是window对象</span></span><br><span class="line"><span class="comment">//解决办法： 备份this</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//正确的写法</span></span><br><span class="line"><span class="keyword">var</span> box1 = <span class="built_in">document</span>.getElementById(<span class="string">"box1"</span>);</span><br><span class="line"></span><br><span class="line">box1.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> self = <span class="keyword">this</span>;        <span class="comment">//备份this，定时器里面的this就是我们的box1了</span></span><br><span class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		self.style.background = <span class="string">"red"</span>;</span><br><span class="line">	&#125;,<span class="number">2000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-数组中存放的函数，被数组索引之后加圆括号调用，this就是这个数组"><a href="#5-数组中存放的函数，被数组索引之后加圆括号调用，this就是这个数组" class="headerlink" title="5. 数组中存放的函数，被数组索引之后加圆括号调用，this就是这个数组"></a>5. 数组中存放的函数，被数组索引之后加圆括号调用，this就是这个数组</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function <span class="function"><span class="title">fun</span><span class="params">()</span></span> &#123;</span><br><span class="line">    console.log(<span class="keyword">this</span> == arr)  <span class="comment">//true</span></span><br><span class="line">    console.log(<span class="keyword">this</span>.length)  <span class="comment">//3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="function"><span class="keyword">fun</span>, "w", "e"]</span></span><br><span class="line"></span><br><span class="line">arr[<span class="number">0</span>]()</span><br><span class="line"></span><br><span class="line"><span class="comment">//此时这个函数是从数组中枚举出来然后加圆括号执行的，所以最终调用者可以认为是这个数组，上下文就是这个数组。</span></span><br></pre></td></tr></table></figure>
+<h3 id="6-call-和apply"><a href="#6-call-和apply" class="headerlink" title="6. call()和apply()"></a>6. call()和apply()</h3><ul>
+<li>这两个函数都是函数的方法，只有函数能够打点调用call()、apply()，表示用指定的上下文执行这个函数。</li>
+<li>语法： 函数.call(上下文) || 函数.apply(上下文)</li>
+<li>区别： 体现在参数上。此时我们要执行的fun函数可以接受参数，apply需要用数组体现这些参数，而call必须用逗号隔开，罗列所有参数：</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function <span class="function"><span class="title">fun</span><span class="params">(a,b,c)</span></span>&#123;</span><br><span class="line">	console.log(a+b+c);</span><br><span class="line">	console.log(<span class="keyword">this</span>.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	<span class="string">"name"</span> : <span class="string">"小明"</span>,</span><br><span class="line">	<span class="string">"age"</span> : <span class="number">12</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span>.<span class="title">call</span><span class="params">(obj,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>)</span></span>;  <span class="comment">// 21  12</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span>.<span class="title">apply</span><span class="params">(obj,[<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>])</span></span>;  <span class="comment">// 21  12</span></span><br></pre></td></tr></table></figure>
+<h3 id="函数的arguments"><a href="#函数的arguments" class="headerlink" title="函数的arguments"></a>函数的arguments</h3><ul>
+<li>首先说说什么是arguments.callee。在函数内部，如果想得到函数自身，用this是不可能的。我们必须使用arguments.callee<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function <span class="function"><span class="keyword">fun</span>()&#123;</span></span><br><span class="line"><span class="function">	<span class="title">console</span></span>.log(arguments.callee === <span class="function"><span class="keyword">fun</span>);  <span class="title">/</span></span>/<span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span>();  <span class="title">/</span></span>/<span class="literal">true</span>，因为arguments.callee就是<span class="function"><span class="keyword">fun</span>自己</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function <span class="function"><span class="title">fun</span><span class="params">(a,b,c,d,e,f)</span></span>&#123;</span><br><span class="line">	console.log(arguments.callee.length);  <span class="comment">//6</span></span><br><span class="line">    console.log(arguments.length);         <span class="comment">//3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">fun</span><span class="params">(<span class="number">88</span>,<span class="number">66</span>,<span class="number">44</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>函数的length是形参列表的长度，就是函数定义的时候写在fun()圆括号里面的字母个数。无视你的实参个数！也就是说：<br>arguments.callee.length    形参列表的个数。<br>arguments.length            实参个数，就是调用函数的时候传进来的实参个数。</p>
+</blockquote>
+<h3 id="用new运算符来调用函数-构造函数说明"><a href="#用new运算符来调用函数-构造函数说明" class="headerlink" title="用new运算符来调用函数(构造函数说明)"></a>用new运算符来调用函数(构造函数说明)</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/数组的操作方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alley23">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/11/数组的操作方法/" itemprop="url">数组的操作方法（Array）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T20:12:24+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="一-Arry-对象属性"><a href="#一-Arry-对象属性" class="headerlink" title="一. Arry 对象属性"></a>一. Arry 对象属性</h4><ol>
+<li><p>length ：设置或返回数组中元素的数目</p>
+ <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">console.log(arr.length) <span class="comment">//6</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="二-Array-方法"><a href="#二-Array-方法" class="headerlink" title="二. Array 方法"></a>二. Array 方法</h4><h5 id="1-concat"><a href="#1-concat" class="headerlink" title="1. concat()"></a>1. concat()</h5><ul>
+<li>连接两个或更多的数组，并返回结果  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="selector-tag">var</span> arr1 = [<span class="string">"w"</span>]</span><br><span class="line">console.log(arr.concat(<span class="string">"s"</span>, arr1)) <span class="comment">//[1,2,3,"s"]</span></span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="2-join"><a href="#2-join" class="headerlink" title="2. join()"></a>2. join()</h5><ul>
+<li>把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。  <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>]</span><br><span class="line">console.<span class="built_in">log</span>( arr.<span class="built_in">join</span>() ) <span class="comment">//q,w,e</span></span><br><span class="line">console.<span class="built_in">log</span>( arr.<span class="built_in">join</span>(<span class="string">"*"</span>) ) <span class="comment">//q*w*e</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="3-toString"><a href="#3-toString" class="headerlink" title="3. toString()"></a>3. toString()</h5><ul>
+<li>把数组转换为字符串，并返回结果。  <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.<span class="keyword">toString</span>()) <span class="comment">//q,w,e</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="4-pop"><a href="#4-pop" class="headerlink" title="4. pop()"></a>4. pop()</h5><ul>
+<li><p>删除并返回数组的最后一个元素</p>
+  <figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.<span class="keyword">pop</span>()) <span class="comment">// e</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="5-push"><a href="#5-push" class="headerlink" title="5. push()"></a>5. push()</h5><ul>
+<li>向数组的末尾添加一个或更多元素，并返回新的长度。  <figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.<span class="keyword">push</span>(<span class="string">"r"</span>))   <span class="comment">// 4</span></span><br><span class="line">console.<span class="built_in">log</span>(arr)             <span class="comment">// [q", "w", "e", "r"]</span></span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="6-shift"><a href="#6-shift" class="headerlink" title="6. shift()"></a>6. shift()</h5><ul>
+<li>删除并返回数组的第一个元素  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.shift()) <span class="comment">// q</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="7-unshift"><a href="#7-unshift" class="headerlink" title="7. unshift()"></a>7. unshift()</h5><ul>
+<li>向数组的开头添加一个或更多元素，并返回新的长度。  <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>]</span><br><span class="line">console.log(arr.unshift(<span class="string">"t"</span>)) <span class="regexp">//</span> <span class="number">4</span></span><br><span class="line">console.log(arr)              <span class="regexp">//</span> [<span class="string">"t"</span>, <span class="string">"q"</span>, <span class="string">"w"</span>, <span class="string">"e"</span>]</span><br><span class="line"><span class="regexp">//</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="8-slice"><a href="#8-slice" class="headerlink" title="8. slice()"></a>8. slice()</h5><ul>
+<li>从某个已有的数组返回选定的元素</li>
+<li>arr.slice(start,end)</li>
+<li>只有一个参数：</li>
+<li><p>1）为正：从为该参数的下表一直截取到最后；</p>
+  <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>,<span class="string">"t"</span>]</span><br><span class="line">console.log(arr.slice(<span class="number">2</span>))         <span class="regexp">//</span>[<span class="string">"e"</span>, <span class="string">"r"</span>, <span class="string">"t"</span>]</span><br><span class="line"><span class="regexp">//</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2）为负：从倒数第几个元素截取到最后</p>
+  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>,<span class="string">"t"</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.slice(-<span class="number">2</span>))        //[<span class="string">"r"</span>, <span class="string">"t"</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>两个参数</p>
+</li>
+<li><p>1）为正：表示表示从第一个为第一个参数的下标截取到为最后一个参数下标</p>
+  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>,<span class="string">"t"</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.slice(<span class="number">2</span>,<span class="number">4</span>))      //[<span class="string">"e"</span>, <span class="string">"r"</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2）一正一负：表示表示从第一个为第一个参数的下标截取到从倒数为第二个参数的地方；</p>
+  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>,<span class="string">"t"</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.slice(<span class="number">1</span>, -<span class="number">1</span>))    //[<span class="string">"w"</span>, <span class="string">"e"</span>, <span class="string">"r"</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3）两个都为负：从倒数第一个参数绝对值的位置截取到第二个参数绝对值的位置（第二个参数的绝对值不小于第一个参数的绝对值）</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>,<span class="string">"t"</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.slice(<span class="number">-2</span>, <span class="number">-1</span>))       <span class="comment">//["r"]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="9-reverse"><a href="#9-reverse" class="headerlink" title="9. reverse()"></a>9. reverse()</h5><ul>
+<li>颠倒数组中元素的顺序。  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>,<span class="string">"t"</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.<span class="built_in">reverse</span>())     //[<span class="string">"t"</span>, <span class="string">"r"</span>, <span class="string">"e"</span>, <span class="string">"w"</span>, <span class="string">"q"</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="10-sort"><a href="#10-sort" class="headerlink" title="10. sort()"></a>10. sort()</h5><ul>
+<li>对数组的元素进行排序</li>
+<li><p>1）如果没有参数，将按字母顺序对数组中的元素进行排序，说得更精确点，是按照字符编码的顺序进行排序。（把数组的元素都转换成字符串）</p>
+  <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> arr = [<span class="number">0</span>, <span class="number">10</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">6</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.<span class="built_in">sort</span>()) //[<span class="number">0</span>, <span class="number">10</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">var</span> arr = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"c"</span>]</span><br><span class="line">console.<span class="built_in">log</span>(arr.<span class="built_in">sort</span>()) //[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2)如果想按照其他标准进行排序，就需要提供比较函数，该函数要比较两个值，然后返回一个用于说明这两个值的相对顺序的数字。比较函数应该具有两个参数 a 和 b，其返回值如下：</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 若 a 小于 b，在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。</span></span><br><span class="line"><span class="comment">// 若 a 等于 b，则返回 0。</span></span><br><span class="line"><span class="comment">// 若 a 大于 b，则返回一个大于 0 的值。</span></span><br><span class="line">function sortNumber(<span class="selector-tag">a</span>,b) &#123;</span><br><span class="line">	return <span class="selector-tag">a</span> - b</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">var</span> arr = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">23</span>, <span class="number">44</span>]</span><br><span class="line">arr.sort(sortNumber) <span class="comment">//[1, 3, 5, 8, 10, 23, 44]</span></span><br><span class="line"></span><br><span class="line">function sortNumber(<span class="selector-tag">a</span>,b) &#123;</span><br><span class="line">	return <span class="selector-tag">b</span> - a</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">var</span> arr = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">23</span>, <span class="number">44</span>]</span><br><span class="line">console.log( arr.sort(sortNumber)) <span class="comment">//[44, 23, 10, 8, 5, 3, 1]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="11-splice"><a href="#11-splice" class="headerlink" title="11. splice()"></a>11. splice()</h5><ul>
+<li>向/从数组中添加/删除项目，然后返回被删除的项目</li>
+<li><p>1-1)一个参数表示从为该参数的下标截取到最后</p>
+  <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">console.log(arr.splice(<span class="number">1</span>)) <span class="comment">//[2, 3, 4, 5, 6]</span></span><br><span class="line">console.log(arr)           <span class="comment">//[1]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>1-2)一个参数为负表示从后面为第一个参数开始截取到最后</p>
+  <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">console.log(arr.splice(<span class="number">-1</span>)) <span class="comment">//[6]</span></span><br><span class="line">console.log(arr)            <span class="comment">//[1, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2-1） 两个参数表示从为以一个参数的下标向后截取为第二个参数个</p>
+ <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">console.log(arr.splice(<span class="number">2</span>, <span class="number">4</span>)) <span class="comment">//[3, 4, 5, 6]</span></span><br><span class="line">console.log(arr) <span class="comment">//[1, 2]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2-2) 一正一负表示从后面为第一个参数开始截取为第二个参数的个数</p>
+  <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">console.log(arr.splice(<span class="number">-4</span>, <span class="number">2</span>))  <span class="comment">//[3,4]</span></span><br><span class="line">console.log(arr)                <span class="comment">//[1,2,5,6]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3)三个参数</p>
+</li>
+<li>第一个参数表示开始的下标位置，第二个参数表示从为第一个参数的下标开始替换的个数，（0表示插入）； 第三个参数表示替换或插入的元素  <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第二个参数为0</span></span><br><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">arr.splice(<span class="number">1</span>, <span class="number">0</span>, <span class="string">"w"</span>)</span><br><span class="line">console.log(arr)  <span class="comment">//[1, "w", 2, 3, 4, 5, 6]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第二个参数不为0</span></span><br><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">arr.splice(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"w"</span>)</span><br><span class="line">console.log(arr)  <span class="comment">//[1, "w", 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="12-toLocaleString"><a href="#12-toLocaleString" class="headerlink" title="12. toLocaleString()"></a>12. toLocaleString()</h5><ul>
+<li>把数组转换为本地字符串，并返回本地字符串表示。  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"c"</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr.toLocaleString()) <span class="comment">//a,b,d,e,c</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/字符串操作方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alley23">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/10/字符串操作方法/" itemprop="url">字符串操作方法 (String)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T19:12:12+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>String 对象是 String</li>
+<li>原始类型的对象表示法，它是以下方式创建的：</li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str1 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"hello world!"</span>);</span><br><span class="line"><span class="comment">//普通写法</span></span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">"hello world!"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>length属性<ul>
+<li>返回值：返回字符串个数（每个空格也算一个）</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"wwww"</span></span><br><span class="line">console.<span class="built_in">log</span>(<span class="built_in">str</span>.length)   <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>valueOf() 方法和 toString() 方法<ul>
+<li>返回值：stringObject 的原始字符串值</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line"><span class="built_in">str</span>.valueOf()  <span class="comment">//"hello world!"</span></span><br><span class="line"><span class="built_in">str</span>.<span class="built_in">toString</span>() <span class="comment">//"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>(<span class="built_in">str</span>.valueOf() == <span class="built_in">str</span>.<span class="built_in">toString</span>()) <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>charAt() 和 charCodeAt() 方法<ul>
+<li>charAt() 返回的是指定位置的字符串</li>
+<li>charCodeAt() 返回在指定的位置的字符的 Unicode 编码</li>
+<li>访问的是单个字符串的单个字符，这样两个方法都有一个参数（要操作字符的位置）</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"qwerty"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.charAt(<span class="number">1</span>) )  <span class="comment">//w</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.charCodeAt(<span class="number">1</span>) ) <span class="comment">//119</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>concat() 方法<ul>
+<li>连接字符串</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"ss"</span></span><br><span class="line">var str2 = <span class="string">"ww"</span> </span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">concat</span>(<span class="string">"vv"</span>) )  <span class="comment">//"ssvv"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">concat</span>(str2) )   <span class="comment">// "ssww"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>indexOf() 和 lastIndexOf() 方法<ul>
+<li>indexOf() 和 lastIndexOf() 方法返回的都是指定的子串在另一个字符串中的位置，如果没有找不到子串，则返回 -1。</li>
+<li>区别：indexOf() 方法是从字符串的开头（位置 0）开始检索字符串，而 lastIndexOf() 方法则是从字符串的结尾开始检索子串。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.indexOf(<span class="string">"d"</span>) )  <span class="comment">// 10</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.lastIndexOf(<span class="string">"d"</span>) )  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>slice() 和 substring()<ul>
+<li>返回值： 一个新的字符串数</li>
+<li>参数： 接受一个或者两个参数，一个参数表示从该参数位置截取到最后，两个参数表示从第一个参数位置开始截取第二个参数的位置</li>
+<li>如果参数为负数，slice()表示从反方向截取; substring()会将负数解释为0，还会将小的数字作为起始位置;</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.slice(<span class="number">3</span>) )         <span class="comment">//输出 "lo world"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.substring(<span class="number">3</span>) )     <span class="comment">//输出 "lo world"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.slice(<span class="number">3</span>, <span class="number">7</span>) )      <span class="comment">//输出 "lo w"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.substring(<span class="number">3</span>, <span class="number">7</span>) )  <span class="comment">//输出 "lo w"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果参数为负数，slice()表示从反方向截取; substring()会将负数解释为0，还会将小的数字作为起始位置;</span></span><br><span class="line"></span><br><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.slice(-<span class="number">3</span>) )         <span class="comment">//输出 "rld"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.substring(-<span class="number">3</span>) )     <span class="comment">//解释为substring(0); 输出 "hello world"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.slice(<span class="number">3</span>, -<span class="number">4</span>) )      <span class="comment">//输出 "lo w"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.substring(<span class="number">3</span>, -<span class="number">4</span>) )  <span class="comment">//解释为substring(0, 3); 输出 "hel"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>split()方法<ul>
+<li>用于把一个字符串分割成字符串数组</li>
+<li>返回值： 一个字符串数组</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> str = <span class="string">"hello world!"</span></span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span>( str.<span class="built_in">split</span>(<span class="string">" "</span>) )  //[<span class="string">"hello"</span>, <span class="string">"world!"</span>]</span><br><span class="line">console.<span class="built_in">log</span>( str.<span class="built_in">split</span>(<span class="string">" "</span>) )  //[<span class="string">"hello"</span>, <span class="string">"world!"</span>]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>toLowerCase()、toLocaleLowerCase()、toUpperCase() 和 toLocaleUpperCase()<ul>
+<li>执行大小写转换</li>
+<li>返回值：一个新的字符串</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.toLocaleUpperCase() ) <span class="comment">//输出 "HELLO WORLD!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.toUpperCase() )		<span class="comment">//输出 "HELLO WORLD!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.toLocaleLowerCase() )	<span class="comment">//输出 "hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.toLowerCase() )		<span class="comment">//输出 "hello world!"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>match()<ul>
+<li>字符串内检索指定的值，或找到一个或多个正则表达式的匹配</li>
+<li>但是它返回指定的值，而不是字符串的位置</li>
+<li>返回值： 存放匹配结果的数组</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span>=<span class="string">"1 plus 2 equal 3"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">match</span>(/plus/g) )   <span class="comment">// ["plus"]</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">match</span>(/\d+/g) )    <span class="comment">//["1", "2", "3"]</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>search()<ul>
+<li>返回第一个与 regexp 相匹配的子串的起始位置。</li>
+<li>如果没有找到任何匹配的子串，则返回 -1。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">search</span>(/world/) )  <span class="comment">//6</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">search</span>(/sds/) )    <span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>replace()<ul>
+<li>返回一个新的字符串</li>
+<li>在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">new</span><span class="type">Str</span> = str1.replace(<span class="string">"hello"</span>, <span class="string">"你好"</span>)   <span class="comment">//你好 world!</span></span><br><span class="line"><span class="keyword">var</span> <span class="keyword">new</span><span class="type">Str</span> = str.replace(/l/g, <span class="string">"K"</span>)          <span class="comment">//heKKo worKd!</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一个参数是正则，第二个参数是带$符的字符串</span></span><br><span class="line"><span class="keyword">var</span> str3 = <span class="string">'这是一段原始文本,"3c这要替换4d"!'</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">new</span><span class="type">Str</span> = str3.replace( /([<span class="number">0</span><span class="number">-9</span>])([a-z])/g,<span class="string">"$1"</span> );</span><br><span class="line">console.log( <span class="keyword">new</span><span class="type">Str</span> );    <span class="comment">//输出：    这是一段原始文本,"3这要替换4"!';</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>上面的例子，$1表示regexp中的第一个子表示即（[0-9]）匹配单个数字，同理若是$2则表示第二个子表示即（[a-z]）；所以，’3c’这个匹配到的整体被第一个子表示说表示的’3’替换，’4d’被第一个子表示匹配的数字’4’所替换。其他几个同理可得：</p>
+</li>
+<li><p>（/([0-9])([a-z])/g,”$2″）—&gt;////输出： 这是一段原始文本,”c这要替换d”!’; (3c和4d被相应的第二个子表示匹配出来的c和d替换)</p>
+</li>
+<li>（/([0-9])([a-z])/g,”$’”）—&gt;////输出： 这是一段原始文本,”这要替换d”!这要替换”!”!’; (3c被3c右侧文本替换，4d右侧是”!替换，所以出现俩次)</li>
+</ul>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一个参数是正则，第二个参数函数</span></span><br><span class="line"><span class="keyword">var</span> str4 = <span class="string">'这是一段原始文本，需要替换的内容"aa这要bbb替换ccccc"！'</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">new</span><span class="type">Str</span> = str4.replace( /[a-z]+/g,<span class="function"><span class="keyword">function</span> </span>($<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; $<span class="number">0.</span>length; i++) &#123;</span><br><span class="line">        str += <span class="string">'*'</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125; );</span><br><span class="line">console.log( <span class="keyword">new</span><span class="type">Str</span> );   <span class="comment">//这是一段原始文本，需要替换的内容"**这要***替换*****"！</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面的例子函数的第一个参数为匹配的regexp的整体，根据长度函数返回值为相应替换的文本；</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/25/git常用操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alley23">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/25/git常用操作/" itemprop="url">git常用操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-25T20:08:43+08:00">
+                2017-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="克隆、新建、删除分支"><a href="#克隆、新建、删除分支" class="headerlink" title="克隆、新建、删除分支"></a>克隆、新建、删除分支</h3><ul>
+<li><p>克隆仓库</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">XXX</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建并切换到本地分支</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -<span class="selector-tag">b</span> XXX</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本地代码合并到远程分支</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> <span class="built_in">origin</span> XXX</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>拉取运程分支</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git pull origin XXX</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看分支</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -<span class="selector-tag">a</span>  <span class="comment">//查看远程分支</span></span><br><span class="line">git branch     <span class="comment">//查看本地分支</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>切换到分支</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git checkout XXX</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除分支</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -d XXX              <span class="comment">//删除本地分支</span></span><br><span class="line">git <span class="keyword">push</span> origin --<span class="keyword">delete</span> XXX   <span class="comment">//删除远程分支</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="项目提交操作"><a href="#项目提交操作" class="headerlink" title="项目提交操作"></a>项目提交操作</h3><ul>
+<li>添加项目到暂存区（stage）</li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">add</span><span class="bash"> .</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看状态</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>将暂存区中所有修改提交到分支仓库中</li>
+</ul>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> git commit -m <span class="string">"XXX"</span></span><br><span class="line"><span class="comment">//-m 后面紧跟着的是对当前版本的一段描述话语，方便以后再分支仓库中快速找到某个版本；</span></span><br><span class="line"><span class="comment">//注意：这里要用双引号，不能用单引号</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看版本日志信息"><a href="#查看版本日志信息" class="headerlink" title="查看版本日志信息"></a>查看版本日志信息</h3><ul>
+<li>查看某个分支仓库中的版本信息</li>
+</ul>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> git <span class="built-in">log</span></span><br><span class="line"><span class="comment">//commit：每创建一条版本信息时，都会用 SHA1 生成一个很大的数字，并用十六进制进行表示，目的是根据这个 commit id可以找到对应的版本信息，不会重复。</span></span><br><span class="line"><span class="comment">//Author：提交这条版本信息的人是谁，适用于团队开发时，记录每个版本是谁提交的，这样出了问题也好找对应的负责人解决问题。</span></span><br><span class="line"><span class="comment">//Date：这个就是提交到分支仓库的时间了。</span></span><br><span class="line"><span class="comment">//版本描述信息，如果没有它，你看到的只是一大串数字，压根不知道这条版本到底做了哪些修改。</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>感觉日志信息输出太多，可以使用 git log –pretty=oneline 在一行显示日志</li>
+</ul>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> <span class="comment">--pretty=oneline</span></span><br><span class="line">//输出</span><br><span class="line">ad489d062e14dfe87d0d611e0a98f4345eaa7305 (HEAD -&gt; master, origin/master, origin/HEAD) [<span class="number">02</span>]commit <span class="built_in">add</span> flie</span><br><span class="line"><span class="number">5792</span>db2ce7891a5b5973d2b1fadce523fbcc7a7c [<span class="number">01</span>]commit test flie</span><br><span class="line"><span class="number">5</span>a5c7081f9bcc077477d6181f7a6a6c2eac522d9 Initial commit</span><br></pre></td></tr></table></figure>
+<h3 id="回滚到指定版本"><a href="#回滚到指定版本" class="headerlink" title="回滚到指定版本"></a>回滚到指定版本</h3><ul>
+<li>使用 git reset –hard <commit id=""> 指令进行版本回滚</commit></li>
+</ul>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> git reset --hard <span class="number">5792</span>db2c</span><br><span class="line"></span><br><span class="line"><span class="comment">//说明：</span></span><br><span class="line"><span class="comment">//--hard后面跟着的字符串是要回滚到的那条版本信息对应的 commit id，当然不需要全部写，只需要截取前面7-8位唯一标识即可。</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 git reflog 指令查看刚才所有操作日志</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reflog</span></span><br></pre></td></tr></table></figure>
+<h4 id="git-log-与git-reflog-区别"><a href="#git-log-与git-reflog-区别" class="headerlink" title="git log 与git reflog 区别"></a>git log 与git reflog 区别</h4><ul>
+<li>git log：只查询文件修改/新增/删除等与文件有关的日志记录；</li>
+<li>git reflog：不仅记录与文件有关的记录，还会记录对分支仓库的回滚记录。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/SSH-set/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alley23">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/24/SSH-set/" itemprop="url">获取SSH key</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T18:08:43+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-确认自己是否已经拥有密钥"><a href="#1-确认自己是否已经拥有密钥" class="headerlink" title="1. 确认自己是否已经拥有密钥"></a>1. 确认自己是否已经拥有密钥</h3><p>为了向 Git 服务器提供 SSH 公钥，如果某系统用户尚未拥有密钥，必须事先为其生成一份。 这个过程在所有操作系统上都是相似的。 首先，你需要确认自己是否已经拥有密钥。 默认情况下，用户的 SSH 密钥存储在其 ~/.ssh 目录下。 进入该目录并列出其中内容，你便可以快速确认自己是否已拥有密钥：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/.ssh</span><br><span class="line">$ ls</span><br><span class="line">authorized_keys2  id_dsa       known_hosts</span><br><span class="line">config            id_dsa.pub</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-生成SSH-key"><a href="#2-生成SSH-key" class="headerlink" title="2. 生成SSH key"></a>2. 生成SSH key</h3><p>我们需要寻找一对以 id_dsa 或 id_rsa 命名的文件，其中一个带有 .pub 扩展名。 .pub 文件是你的公钥，另一个则是私钥。 如果找不到这样的文件（或者根本没有 .ssh 目录），你可以通过运行 ssh-keygen 程序来创建它们<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen</span><br><span class="line">Generating <span class="keyword">public</span>/<span class="keyword">private</span> rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/</span>schacon<span class="regexp">/.ssh/</span>id_rsa):</span><br><span class="line">Created directory <span class="string">'/home/schacon/.ssh'</span>.</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</span><br><span class="line">Enter same passphrase <span class="string">again:</span></span><br><span class="line">Your identification has been saved <span class="keyword">in</span> <span class="regexp">/home/</span>schacon<span class="regexp">/.ssh/</span>id_rsa.</span><br><span class="line">Your <span class="keyword">public</span> key has been saved <span class="keyword">in</span> <span class="regexp">/home/</span>schacon<span class="regexp">/.ssh/</span>id_rsa.pub.</span><br><span class="line">The key fingerprint <span class="string">is:</span></span><br><span class="line"><span class="string">d0:</span><span class="number">82</span>:<span class="number">24</span>:<span class="number">8</span><span class="string">e:</span><span class="string">d7:</span><span class="string">f1:</span><span class="string">bb:</span><span class="number">9</span><span class="string">b:</span><span class="number">33</span>:<span class="number">53</span>:<span class="number">96</span>:<span class="number">93</span>:<span class="number">49</span>:<span class="string">da:</span><span class="number">9</span><span class="string">b:</span>e3 schacon<span class="meta">@mylaptop</span>.local</span><br></pre></td></tr></table></figure></p>
+<p>首先 ssh-keygen 会确认密钥的存储位置（默认是 .ssh/id_rsa），然后它会要求你输入两次密钥口令。如果你不想在使用密钥时输入口令，将其留空即可。</p>
+<h3 id="3-查看key"><a href="#3-查看key" class="headerlink" title="3. 查看key"></a>3. 查看key</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat <span class="regexp">~/.ssh/</span>id_rsa.pub</span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+X1iMFBvyEE3WJQ<span class="regexp">/SMHsrC8hVxoWa4XIZtybbKnLsgA3UPJHYN66AU7uvfy9JAGQNaxV4T8JBQGoVy+7of8LklhOLXeLu4hvUnw4dyCEVZXLmM/</span>rGGfHHvaJ8jqmq46NYzq25pIbxkAGhgfOnxYZuDBxdKwBXuhMxXiqDL7SKSNpiV5AJ8<span class="regexp">/wvX9wLDw5rd2sanjUvOEGzVXlYxMXIss97TVWajSYubkGbIrMrYHmRWRa95UXuhCja8yFE1Hp0Vk8UxpZ0AU677v+Jj6p4fSVEGe8AzgETdQUQcgQk6C6lRj7KC8/</span>BmRGrB0DdfimPjiCcXeJoFsUcG6w9dtE4wGVL wb-likai<span class="meta">@cai</span>-inc.com</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/hexo搭建博客及GitHub部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alley23">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/05/hexo搭建博客及GitHub部署/" itemprop="url">hexo搭建博客及GitHub部署</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T22:10:43+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、安装hexo"><a href="#一、安装hexo" class="headerlink" title="一、安装hexo"></a>一、安装hexo</h2><ol>
+<li>全局安装hexo</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install hexo -g</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>创建文件夹并初始化</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo init</span></span><br></pre></td></tr></table></figure>
+<p>3.安装依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install</span></span><br></pre></td></tr></table></figure>
+<p>4.生成静态文件、启动服务</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">$</span> hexo g   <span class="comment">//生成静态文件</span></span><br><span class="line"><span class="symbol">$</span> hexo s  <span class="comment">//开启服务器</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题：假如页面一直无法跳转，那么可能端口被占用了。此时我们ctrl+c停止服务器，接着输入“hexo server -p 端口号”来改变端口号</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo<span class="built_in"> server </span>-p 8888</span><br></pre></td></tr></table></figure>
+<ol>
+<li>新建一篇博客</li>
+</ol>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo <span class="keyword">new</span> <span class="type">post</span> “我的第一篇GitHub博客”</span><br></pre></td></tr></table></figure>
+<h2 id="二、创建github仓库及部署"><a href="#二、创建github仓库及部署" class="headerlink" title="二、创建github仓库及部署"></a>二、创建github仓库及部署</h2><ol>
+<li><p>Github新建项目，项目必须要遵守格式：名称.github.io</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aa<span class="selector-class">.github</span><span class="selector-class">.io</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改_config.yml配置文件</p>
+</li>
+</ol>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">  <span class="attribute">type</span>: git    <span class="comment">//git</span></span><br><span class="line">  <span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:Alley23/alley.io.git  <span class="comment">//GitHub仓库地址</span></span><br><span class="line">  <span class="attribute">branch</span>: master   <span class="comment">//分支</span></span><br></pre></td></tr></table></figure>
+<p>3.安装hexo-deployer-git自动部署发布工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install hexo-deployer-git  --save</span></span><br></pre></td></tr></table></figure>
+<p>4.发布到Github</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean <span class="meta">&amp;&amp; hexo g &amp;&amp; hexo d</span></span><br><span class="line"><span class="comment">//clean清除缓存文件 (db.json) 和已生成的静态文件 (public)</span></span><br><span class="line"><span class="comment">//g 生成静态文件</span></span><br><span class="line"><span class="comment">//d 部署网站</span></span><br></pre></td></tr></table></figure>
+<h2 id="三、问题解决"><a href="#三、问题解决" class="headerlink" title="三、问题解决"></a>三、问题解决</h2><ul>
+<li>在执行hexo deploy的时候一直出现ERROR Deployer not found: git。<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cnpm install hexo-deployer-git --save</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://hexo.io/zh-cn/docs/commands.html/" target="_blank" rel="noopener">hexo指令</a></p>
 
           
         
@@ -390,14 +1412,32 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/tags.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>

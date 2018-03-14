@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="String 对象是 String 原始类型的对象表示法，它是以下方式创建的：  123var str1 = new String(&quot;hello world!&quot;);//普通写法var str2 = &quot;hello world!&quot;  length属性 返回值：返回字符串个数（每个空格也算一个）    12var str = &quot;wwww&quot;console.log(str.length)   // 4">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串操作方法 (String)">
+<meta property="og:url" content="http://yoursite.com/2018/03/10/字符串操作方法/index.html">
+<meta property="og:site_name" content="Alley23">
+<meta property="og:description" content="String 对象是 String 原始类型的对象表示法，它是以下方式创建的：  123var str1 = new String(&quot;hello world!&quot;);//普通写法var str2 = &quot;hello world!&quot;  length属性 返回值：返回字符串个数（每个空格也算一个）    12var str = &quot;wwww&quot;console.log(str.length)   // 4">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-13T15:21:33.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符串操作方法 (String)">
+<meta name="twitter:description" content="String 对象是 String 原始类型的对象表示法，它是以下方式创建的：  123var str1 = new String(&quot;hello world!&quot;);//普通写法var str2 = &quot;hello world!&quot;  length属性 返回值：返回字符串个数（每个空格也算一个）    12var str = &quot;wwww&quot;console.log(str.length)   // 4">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/10/字符串操作方法/"/>
+
+
+
+
+
+  <title>字符串操作方法 (String) | Alley23</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alley23</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">平常心、、、</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/字符串操作方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alley23">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">字符串操作方法 (String)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T19:12:12+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>String 对象是 String</li>
+<li>原始类型的对象表示法，它是以下方式创建的：</li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str1 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"hello world!"</span>);</span><br><span class="line"><span class="comment">//普通写法</span></span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">"hello world!"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>length属性<ul>
+<li>返回值：返回字符串个数（每个空格也算一个）</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"wwww"</span></span><br><span class="line">console.<span class="built_in">log</span>(<span class="built_in">str</span>.length)   <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>valueOf() 方法和 toString() 方法<ul>
+<li>返回值：stringObject 的原始字符串值</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line"><span class="built_in">str</span>.valueOf()  <span class="comment">//"hello world!"</span></span><br><span class="line"><span class="built_in">str</span>.<span class="built_in">toString</span>() <span class="comment">//"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>(<span class="built_in">str</span>.valueOf() == <span class="built_in">str</span>.<span class="built_in">toString</span>()) <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>charAt() 和 charCodeAt() 方法<ul>
+<li>charAt() 返回的是指定位置的字符串</li>
+<li>charCodeAt() 返回在指定的位置的字符的 Unicode 编码</li>
+<li>访问的是单个字符串的单个字符，这样两个方法都有一个参数（要操作字符的位置）</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"qwerty"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.charAt(<span class="number">1</span>) )  <span class="comment">//w</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.charCodeAt(<span class="number">1</span>) ) <span class="comment">//119</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>concat() 方法<ul>
+<li>连接字符串</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"ss"</span></span><br><span class="line">var str2 = <span class="string">"ww"</span> </span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">concat</span>(<span class="string">"vv"</span>) )  <span class="comment">//"ssvv"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">concat</span>(str2) )   <span class="comment">// "ssww"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>indexOf() 和 lastIndexOf() 方法<ul>
+<li>indexOf() 和 lastIndexOf() 方法返回的都是指定的子串在另一个字符串中的位置，如果没有找不到子串，则返回 -1。</li>
+<li>区别：indexOf() 方法是从字符串的开头（位置 0）开始检索字符串，而 lastIndexOf() 方法则是从字符串的结尾开始检索子串。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.indexOf(<span class="string">"d"</span>) )  <span class="comment">// 10</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.lastIndexOf(<span class="string">"d"</span>) )  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>slice() 和 substring()<ul>
+<li>返回值： 一个新的字符串数</li>
+<li>参数： 接受一个或者两个参数，一个参数表示从该参数位置截取到最后，两个参数表示从第一个参数位置开始截取第二个参数的位置</li>
+<li>如果参数为负数，slice()表示从反方向截取; substring()会将负数解释为0，还会将小的数字作为起始位置;</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.slice(<span class="number">3</span>) )         <span class="comment">//输出 "lo world"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.substring(<span class="number">3</span>) )     <span class="comment">//输出 "lo world"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.slice(<span class="number">3</span>, <span class="number">7</span>) )      <span class="comment">//输出 "lo w"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.substring(<span class="number">3</span>, <span class="number">7</span>) )  <span class="comment">//输出 "lo w"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果参数为负数，slice()表示从反方向截取; substring()会将负数解释为0，还会将小的数字作为起始位置;</span></span><br><span class="line"></span><br><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.slice(-<span class="number">3</span>) )         <span class="comment">//输出 "rld"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.substring(-<span class="number">3</span>) )     <span class="comment">//解释为substring(0); 输出 "hello world"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.slice(<span class="number">3</span>, -<span class="number">4</span>) )      <span class="comment">//输出 "lo w"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.substring(<span class="number">3</span>, -<span class="number">4</span>) )  <span class="comment">//解释为substring(0, 3); 输出 "hel"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>split()方法<ul>
+<li>用于把一个字符串分割成字符串数组</li>
+<li>返回值： 一个字符串数组</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> str = <span class="string">"hello world!"</span></span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span>( str.<span class="built_in">split</span>(<span class="string">" "</span>) )  //[<span class="string">"hello"</span>, <span class="string">"world!"</span>]</span><br><span class="line">console.<span class="built_in">log</span>( str.<span class="built_in">split</span>(<span class="string">" "</span>) )  //[<span class="string">"hello"</span>, <span class="string">"world!"</span>]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>toLowerCase()、toLocaleLowerCase()、toUpperCase() 和 toLocaleUpperCase()<ul>
+<li>执行大小写转换</li>
+<li>返回值：一个新的字符串</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.toLocaleUpperCase() ) <span class="comment">//输出 "HELLO WORLD!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.toUpperCase() )		<span class="comment">//输出 "HELLO WORLD!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.toLocaleLowerCase() )	<span class="comment">//输出 "hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.toLowerCase() )		<span class="comment">//输出 "hello world!"</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>match()<ul>
+<li>字符串内检索指定的值，或找到一个或多个正则表达式的匹配</li>
+<li>但是它返回指定的值，而不是字符串的位置</li>
+<li>返回值： 存放匹配结果的数组</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span>=<span class="string">"1 plus 2 equal 3"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">match</span>(/plus/g) )   <span class="comment">// ["plus"]</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">match</span>(/\d+/g) )    <span class="comment">//["1", "2", "3"]</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>search()<ul>
+<li>返回第一个与 regexp 相匹配的子串的起始位置。</li>
+<li>如果没有找到任何匹配的子串，则返回 -1。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var <span class="built_in">str</span> = <span class="string">"hello world!"</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">search</span>(/world/) )  <span class="comment">//6</span></span><br><span class="line">console.<span class="built_in">log</span>( <span class="built_in">str</span>.<span class="built_in">search</span>(/sds/) )    <span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>replace()<ul>
+<li>返回一个新的字符串</li>
+<li>在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">new</span><span class="type">Str</span> = str1.replace(<span class="string">"hello"</span>, <span class="string">"你好"</span>)   <span class="comment">//你好 world!</span></span><br><span class="line"><span class="keyword">var</span> <span class="keyword">new</span><span class="type">Str</span> = str.replace(/l/g, <span class="string">"K"</span>)          <span class="comment">//heKKo worKd!</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一个参数是正则，第二个参数是带$符的字符串</span></span><br><span class="line"><span class="keyword">var</span> str3 = <span class="string">'这是一段原始文本,"3c这要替换4d"!'</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">new</span><span class="type">Str</span> = str3.replace( /([<span class="number">0</span><span class="number">-9</span>])([a-z])/g,<span class="string">"$1"</span> );</span><br><span class="line">console.log( <span class="keyword">new</span><span class="type">Str</span> );    <span class="comment">//输出：    这是一段原始文本,"3这要替换4"!';</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>上面的例子，$1表示regexp中的第一个子表示即（[0-9]）匹配单个数字，同理若是$2则表示第二个子表示即（[a-z]）；所以，’3c’这个匹配到的整体被第一个子表示说表示的’3’替换，’4d’被第一个子表示匹配的数字’4’所替换。其他几个同理可得：</p>
+</li>
+<li><p>（/([0-9])([a-z])/g,”$2″）—&gt;////输出： 这是一段原始文本,”c这要替换d”!’; (3c和4d被相应的第二个子表示匹配出来的c和d替换)</p>
+</li>
+<li>（/([0-9])([a-z])/g,”$’”）—&gt;////输出： 这是一段原始文本,”这要替换d”!这要替换”!”!’; (3c被3c右侧文本替换，4d右侧是”!替换，所以出现俩次)</li>
+</ul>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一个参数是正则，第二个参数函数</span></span><br><span class="line"><span class="keyword">var</span> str4 = <span class="string">'这是一段原始文本，需要替换的内容"aa这要bbb替换ccccc"！'</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">new</span><span class="type">Str</span> = str4.replace( /[a-z]+/g,<span class="function"><span class="keyword">function</span> </span>($<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; $<span class="number">0.</span>length; i++) &#123;</span><br><span class="line">        str += <span class="string">'*'</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125; );</span><br><span class="line">console.log( <span class="keyword">new</span><span class="type">Str</span> );   <span class="comment">//这是一段原始文本，需要替换的内容"**这要***替换*****"！</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面的例子函数的第一个参数为匹配的regexp的整体，根据长度函数返回值为相应替换的文本；</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/25/git常用操作/" rel="next" title="git常用操作">
+                <i class="fa fa-chevron-left"></i> git常用操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/数组的操作方法/" rel="prev" title="数组的操作方法（Array）">
+                数组的操作方法（Array） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">小凯</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/tags.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
