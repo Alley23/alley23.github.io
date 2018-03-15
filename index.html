@@ -229,6 +229,197 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/构造函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alley23 Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/15/构造函数/" itemprop="url">构造函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T22:07:16+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><blockquote>
+<p>惯例：</p>
+<p>构造函数始终应该以一个大写字母开头（借鉴自其他OO语言，因为JavaScript不是一个面向对象（oo）的语言，它只是基于对象（bo）。<br>）</p>
+<ul>
+<li>构造函数本身也是函数，只不过可以创建对象而已。</li>
+<li>构造函数和普通函数没有什么区别，只不过是用new来调用；使用new操作符会经历一下4步：</li>
+</ul>
+</blockquote>
+<pre><code>&gt; （1）创建一个新对象；
+&gt; 
+&gt; （2）将构造函数作用域赋给新对象（所以this就指向了这个新对象）；
+&gt; 
+&gt; （3）执行构造函数中的代码（为这个新对象添加属性）
+&gt; 
+&gt; （4）返回新对象
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">People</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="keyword">this</span>.age = <span class="number">12</span>;</span><br><span class="line">    <span class="keyword">this</span>.sex = <span class="string">"男"</span>;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"likai"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> people1 = <span class="keyword">new</span> People()</span><br><span class="line"><span class="keyword">var</span> people2 = <span class="keyword">new</span> People()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(people1)      <span class="comment">//&#123;age: 12, sex: "男", name: "likai"&#125;</span></span><br><span class="line"> <span class="built_in">console</span>.log(people1.age) <span class="comment">//12</span></span><br><span class="line"><span class="built_in">console</span>.log(people2)      <span class="comment">//&#123;age: 12, sex: "男", name: "likai"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(people2.age)  <span class="comment">//12</span></span><br></pre></td></tr></table></figure>
+
+&gt; JS中没有类的概念，我们这里只是和Java、C++、C#做一个类比，JS中只有构造函数而没有类！当一个函数被new操作符调用的时候，它总能返回一类的具有相同属性群的对象，感觉在“构造东西”，所以我们称为构造函数。这个函数很神奇，像一个模子，在制作类似的对象。
+</code></pre><ul>
+<li><p>判断函数是否为构造函数</p>
+<blockquote>
+<p>  是否被new操作符调用</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">    <span class="keyword">this</span>.b = b</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test = Test(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line"><span class="keyword">var</span> test1 = <span class="keyword">new</span> Test(<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"><span class="built_in">console</span>.log( test1.a )      <span class="comment">//3 </span></span><br><span class="line"><span class="built_in">console</span>.log( test.a )       <span class="comment">//报错</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果构造函数里写了return情况</p>
+<blockquote>
+<ol>
+<li>如果return这个基本类型值，则无视这个return，该return什么还是return什么，但是return阻止了构造函数的执行；</li>
+</ol>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">    <span class="keyword">this</span>.b = b;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">this</span>.c = c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> test = <span class="keyword">new</span> Test(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(test)    <span class="comment">//&#123;a: 1, b: 2&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>&gt;  2. 如果return了引用类型值，则返回你return的这个，原有return被覆盖。(new四步走就失效了)
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">    <span class="keyword">this</span>.b = b;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">"g"</span>:<span class="number">1</span>, <span class="string">"h"</span>: <span class="number">2</span>&#125;</span><br><span class="line">    <span class="keyword">this</span>.c = c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> test = <span class="keyword">new</span> Test(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(test)    <span class="comment">//&#123;g: 1, h: 2&#125;</span></span><br></pre></td></tr></table></figure>
+</code></pre><h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><ul>
+<li><p>prototype </p>
+<blockquote>
+<p>每一个函数天生都有prototype属性，指向一个空对象。也就是说，我们不需要定义这个prototype属性，任何一个函数只要写出来，它就拥有了prototype属性。</p>
+<p>当这个构造函数被new的时候，它的每一个实例的<strong>proto</strong>属性，也指向这个对象</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params">a,b,c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">    <span class="keyword">this</span>.b = b;</span><br><span class="line">    <span class="keyword">this</span>.c = c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> test = <span class="keyword">new</span> Test()</span><br><span class="line"><span class="built_in">console</span>.log(Test.prototype === test.__proto__) <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们称Test.prototype是Test构造函数的“原型”，Test.prototype是test的“原型对象”</p>
+</blockquote>
+</li>
+<li><p>__propto__</p>
+<blockquote>
+<p>有原型链查找功能。当实例身上没有某个属性的时候，系统会沿着<strong>proto</strong>去寻找它的原型对象身上有没有这个属性。</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">    <span class="keyword">this</span>.b = b;</span><br><span class="line">    <span class="keyword">this</span>.c = c;</span><br><span class="line">&#125;</span><br><span class="line">Test.prototype.init = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> test = <span class="keyword">new</span> Test(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(Test.prototype.init === test.__proto__.init)  <span class="comment">//true </span></span><br><span class="line">test.init()  <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法的定义在原型上</p>
+<blockquote>
+<p>我们刚才知道如果把函数写在构造函数里面，就相当于定义在了对象身上，此时函数会产生多个不同副本，影响程序效率。此时可以把函数定义在构造函数的原型上，这样所有new出的东西，<strong>proto</strong>就会指向这个对象，从而能够使用这个方法</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">People</span>(<span class="params">name, age, sex</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">&#125;</span><br><span class="line">People.prototype.sayHello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"你好我是"</span> + <span class="keyword">this</span>.name + <span class="string">"！我的年龄是"</span> + <span class="keyword">this</span>.age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化两个对象</span></span><br><span class="line"><span class="keyword">var</span> h1 = <span class="keyword">new</span> People(<span class="string">"小明"</span>, <span class="number">19</span>, <span class="string">"男"</span>);  </span><br><span class="line"><span class="keyword">var</span> h2 = <span class="keyword">new</span> People(<span class="string">"小红"</span>, <span class="number">12</span>, <span class="string">"女"</span>);  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 对象打点调用他们的方法</span></span><br><span class="line">xiaoming.sayHello();   <span class="comment">//你好我是小明！我的年龄是19</span></span><br><span class="line">xiaohong.sayHello();   <span class="comment">//你好我是小红！我的年龄是12</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(h1.sayHello === h2.sayHello); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>hasOwnProperty()方法</p>
+<blockquote>
+<p>可以检测一个属性是存在于实例中，还是存在于原型中。这个方法(不 要忘了它是从 Object 继承来的)只在给定属性存在于对象实例中时，才会返回 true。</p>
+</blockquote>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line">Person.prototype.name = <span class="string">"Nicholas"</span>; Person.prototype.age = <span class="number">29</span>; </span><br><span class="line">Person.prototype.job = <span class="string">"Software Engineer"</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="built_in">console</span>.log(person1.hasOwnProperty(<span class="string">"name"</span>));  <span class="comment">//false</span></span><br><span class="line">person1.name = <span class="string">"Greg"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person1.name); <span class="comment">//"Greg"——来自实例 </span></span><br><span class="line"><span class="built_in">console</span>.log(person1.hasOwnProperty(<span class="string">"name"</span>)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(person2.name); <span class="comment">//"Nicholas"——来自原型 </span></span><br><span class="line"><span class="built_in">console</span>.log(person2.hasOwnProperty(<span class="string">"name"</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="keyword">delete</span> person1.name;</span><br><span class="line"><span class="built_in">console</span>.log(person1.name); <span class="comment">//"Nicholas"——来自原型 </span></span><br><span class="line"><span class="built_in">console</span>.log(person1.hasOwnProperty(<span class="string">"name"</span>)); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><ol>
+<li><a href="https://github.com/Alley23/javascript_demo_list/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E4%B8%BA%E5%9C%86%E9%80%89%E5%9D%91" target="_blank" rel="noopener">为圆选坑</a>  </li>
+<li><a href="https://github.com/Alley23/javascript_demo_list/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/carousel-%E5%9B%BE%E6%96%87%E8%BD%AE%E6%92%AD" target="_blank" rel="noopener">carousel-图文轮播</a>  </li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/14/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1531,7 +1722,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
