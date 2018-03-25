@@ -89,9 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/配置hexo图片/02-hexo-set.png">
 <meta property="og:image" content="http://yoursite.com/2018/03/25/配置hexo图片/01-hexo-img.png">
-<meta property="og:image" content="http://yoursite.com/2016/3/9/本地图片测试/logo.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/03/25/配置hexo图片/logo.jpg">
-<meta property="og:updated_time" content="2018-03-25T10:52:58.755Z">
+<meta property="og:updated_time" content="2018-03-25T10:54:55.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置hexo图片">
 <meta name="twitter:description" content="1.确认_config.yml 中有 post_asset_folder。 Hexo 提供了一种更方便管理 Asset 的设定：post_asset_folder,当设置post_asset_folder为true参数后，新建文件时Hexo会自动建立一个与文章同名的文件夹可以把与该文章相关的所有资源都放到那个文件夹，如此一来，您便可以更方便的使用资源。   2.安装一个可以上传本地图片的插件123">
@@ -312,9 +310,6 @@
 <h2 id="2-安装一个可以上传本地图片的插件"><a href="#2-安装一个可以上传本地图片的插件" class="headerlink" title="2.安装一个可以上传本地图片的插件"></a>2.安装一个可以上传本地图片的插件</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span>在hexo的目录下执行</span><br><span class="line"></span><br><span class="line">$ npm install https:<span class="regexp">//gi</span>thub.com<span class="regexp">/CodeFalling/</span>hexo-asset-image --save</span><br></pre></td></tr></table></figure>
 <h2 id="3-完成安装后用hexo新建文章的时候会发现-posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。如下图："><a href="#3-完成安装后用hexo新建文章的时候会发现-posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。如下图：" class="headerlink" title="3.完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。如下图："></a>3.完成安装后用hexo新建文章的时候会发现_posts目录下面会多出一个和文章名字一样的文件夹。图片就可以放在文件夹下面。如下图：</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo new GitFlow</span></span><br></pre></td></tr></table></figure>
 <p><img src="/2018/03/25/配置hexo图片/01-hexo-img.png" alt="image"></p>
-<blockquote>
-<p>这样的目录结构（目录名和文章名一致），只要使用 !<a href="图片路径XXX">image</a> 就可以插入图片。<br>其中[]里面不写文字则没有图片标题。<br>同时，生成的 html 是<br>\<img src="/2016/3/9/本地图片测试/logo.jpg" alt="logo"><br>而不是<br>\<img src="/2018/03/25/配置hexo图片/logo.jpg" alt="logo"></p>
-</blockquote>
 <p><a href="https://alley23.github.io/" target="_blank" rel="noopener">查看更多文章</a></p>
 
       
